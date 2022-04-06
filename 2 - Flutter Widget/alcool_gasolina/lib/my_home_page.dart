@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: 300,
                 height: 300,
                 child: const Image(
-                  image: AssetImage("images/nao_imite_o_raffa_moreira.jpg"),
+                  image: AssetImage("images/default_image.jpg"),
                 ),
               ),
             ),
