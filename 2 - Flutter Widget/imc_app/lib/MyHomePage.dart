@@ -92,13 +92,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   TextButton(
                     child: const Text("Clica em mim"),
                     onPressed: () {
-                      double altura = double.parse(_controller_altura.text);
-                      double peso = double.parse(_controller_peso.text);
-                      if (peso > 0 && altura > 0) {
-                        value = (peso / (altura * altura));
-                        setState(() {
-                          calculate(value);
-                        });
+                      double? altura = double.tryParse(_controller_altura.text);
+                      double? peso = double.tryParse(_controller_peso.text);
+                      try {
+                        if (peso! > 0 && altura! > 0) {
+                          value = (peso / (altura * altura));
+                          setState(() {
+                            calculate(value);
+                          });
+                        }
+                      } catch (e) {
+                        setState(
+                          () => {resultado = ""},
+                        );
                       }
                     },
                     style: TextButton.styleFrom(
