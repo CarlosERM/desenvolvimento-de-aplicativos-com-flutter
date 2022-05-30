@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:aula_task/task.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CadastroScreen extends StatefulWidget {
   Task? task;
@@ -12,6 +15,7 @@ class CadastroScreen extends StatefulWidget {
 
 class _CadastroScreenState extends State<CadastroScreen> {
   final _formalKey = GlobalKey<FormState>();
+  File _image = File("");
 
   late TextEditingController _textController = TextEditingController();
 
@@ -37,6 +41,40 @@ class _CadastroScreenState extends State<CadastroScreen> {
           key: _formalKey,
           child: Column(
             children: [
+              GestureDetector(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(
+                      vertical: 20.0,
+                    ),
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border:
+                          Border.all(width: 1, color: const Color(0xFFBDBDBD)),
+                      shape: BoxShape.circle,
+                    ),
+                    child: _image == null
+                        ? Icon(
+                            Icons.add_a_photo,
+                            size: 30,
+                          )
+                        : ClipOval(
+                            child: Image.file(_image),
+                          ),
+                  ),
+                  onTap: () async {
+                    final ImagePicker _picker = ImagePicker();
+                    final XFile? pickedFile =
+                        await _picker.pickImage(source: ImageSource.camera);
+                    if (pickedFile != null) {
+                      setState(
+                        () {
+                          _image = File(pickedFile.path);
+                        },
+                      );
+                    }
+                  }),
               Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
